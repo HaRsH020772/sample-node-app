@@ -21,7 +21,7 @@ jobs:
         run: echo "${{ env.DOCKER_ACCESS_TOKEN }}" | docker login --username ${{env.DOCKER_USERNAME}} --password-stdin
 
       - name: Build and tag Docker image
-        run: docker build . -t ${{env.DOCKER_USERNAME}}/spot-garage-backend-application:latest
+        run: docker build . -t ${{env.DOCKER_USERNAME}}/sample-node-app:latest
 
       - name: Push Docker image to Docker Hub
-        run: docker push ${{env.DOCKER_USERNAME}}/spot-garage-backend-application:latest
+        run: docker push ${{env.DOCKER_USERNAME}}/sample-node-app:latest
