@@ -29,24 +29,15 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push ${{env.DOCKER_USERNAME}}/sample-node-app:latest
 
-      - name: Capture Image Digest
-        id: digest
+      - name: Fetch image digest
         run: |
-          DIGEST=$(docker inspect --format '{{index .RepoDigests 0}}' ${{env.DOCKER_USERNAME}}/sample-node-app:latest)
-          echo "$DIGEST"
-          echo "Image Digest: $DIGEST" > image_digest.txt
+          digest=$(docker inspect --format='{{index .RepoDigests 0}}' ${{env.DOCKER_USERNAME}}/sample-node-app:latest)
+          echo "DIGEST: $digest" >> digest.txt
 
-      - name: Store Image Digest in GitHub Repo
-        uses: actions/upload-artifact@v4
+      - name: Commit and push digest file
+        uses: EndBug/add-and-commit@v7
         with:
-          name: image-digest
-          path: image_digest.txt
-      - name: Commit and Push Image Digest File
-        run: |
-          git config --global user.email "panchalharsh0207@gmail.com"
-          git config --global user.name "HaRsH020772"
-          git add image_digest.txt
-          git commit -m "Add image digest file"
-          git remote set-url origin "https://${{ secrets.ACTION_SECRET }}@github.com/HaRsH020772/sample-node-app.git"
-          git push origin master
+          add: digest.txt
+          message: "Update image digest"
+          branch: master
 
