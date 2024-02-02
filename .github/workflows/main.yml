@@ -42,8 +42,9 @@ jobs:
           
       - name: Commit and Push Image Digest File
         run: |
+          touch abc
           git config --global user.email "panchalharsh0207@gmail.com"
           git config --global user.name "HaRsH020772"
-          git add $GITHUB_WORKSPACE/image_digest.txt
+          git add abc
           git commit -m "Add image digest file"
           git push origin master
