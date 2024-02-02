@@ -33,11 +33,12 @@ jobs:
         id: digest
         run: |
           DIGEST=$(docker inspect --format '{{index .RepoDigests 0}}' ${{env.DOCKER_USERNAME}}/sample-node-app:latest)
+          echo "$DIGEST"
           echo "Image Digest: $DIGEST" > image_digest.txt
         shell: bash
 
       - name: Store Image Digest in GitHub Repo
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: image-digest
           path: image_digest.txt
