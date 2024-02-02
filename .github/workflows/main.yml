@@ -4,9 +4,10 @@ on:
   push:
     branches:
       - "master"
-  pull_request:
-    branches:
-      - "master"
+      
+env:
+  DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+  DOCKER_ACCESS_TOKEN: ${{secrets.DOCKER_ACCESS_TOKEN}}
 
 jobs:
   build-and-publish:
