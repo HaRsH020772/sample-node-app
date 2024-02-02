@@ -41,4 +41,5 @@ jobs:
           git config --global user.name "HaRsH020772"
           git add $GITHUB_WORKSPACE/image_digest.txt
           git commit -m "Add image digest file"
-          git push
+          git remote set-url origin "https://${{ secrets.ACTION_SECRET }}@github.com/HaRsH020772/sample-node-app.git"
+          git push origin master
