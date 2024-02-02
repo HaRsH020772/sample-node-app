@@ -34,6 +34,7 @@ jobs:
         run: |
           DIGEST=$(docker inspect --format '{{index .RepoDigests 0}}' ${{env.DOCKER_USERNAME}}/sample-node-app:latest)
           echo "Image Digest: $DIGEST" > $GITHUB_WORKSPACE/image_digest.txt
+          cat $GITHUB_WORKSPACE/image_digest.txt
 
       - name: Commit and Push Image Digest File
         run: |
