@@ -35,19 +35,10 @@ jobs:
           DIGEST=$(docker inspect --format '{{index .RepoDigests 0}}' ${{env.DOCKER_USERNAME}}/sample-node-app:latest)
           echo "Image Digest: $DIGEST" > image_digest.txt
 
-      - name: Upload Image Digest Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: image-digest
-          path: image_digest.txt
-
       - name: Commit and Push Image Digest File
         run: |
           git config --global user.email "panchalharsh0207@gmail.com"
           git config --global user.name "HaRsH020772"
           git add image_digest.txt
           git commit -m "Add image digest file"
-          git remote set-url origin "https://${{ secrets.ACTION_SECRET }}@github.com/HaRsH020772/sample-node-app.git"
-          git push origin master
-
-
+          git push
