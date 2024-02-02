@@ -48,5 +48,5 @@ jobs:
           git add image_digest.txt
           git commit -m "Add image digest file"
           git remote set-url origin "https://${{ secrets.ACTION_SECRET }}@github.com/HaRsH020772/sample-node-app.git"
-          git push origin main
+          git push origin master
 
