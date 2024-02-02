@@ -35,10 +35,17 @@ jobs:
           DIGEST=$(docker inspect --format '{{index .RepoDigests 0}}' ${{env.DOCKER_USERNAME}}/sample-node-app:latest)
           echo "$DIGEST"
           echo "Image Digest: $DIGEST" > image_digest.txt
-        shell: bash
 
       - name: Store Image Digest in GitHub Repo
         uses: actions/upload-artifact@v4
         with:
           name: image-digest
           path: image_digest.txt
+      - name: Commit and Push Image Digest File
+        run: |
+          git config --global user.email "panchalharsh0207@gmail.com"
+          git config --global user.name "HaRsH020772"
+          git add image_digest.txt
+          git commit -m "Add image digest file"
+          git push
+
