@@ -1,1 +1,1 @@
-Image Digest: harshp0207/sample-node-app@sha256:4c0f3d08a4281bc36640b1ec74aacba0435dd31976efdfd6a64561ef53004e44
+Image Digest: harshp0207/sample-node-app@sha256:dce19f3c180931a2758811aefbb23f5009859b70e5f61f7dcd7f8e6bf80aef8a
