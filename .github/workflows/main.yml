@@ -4,6 +4,16 @@ on:
   push:
     branches:
       - "master"
+  workflow_dispatch:
+    inputs:
+      choice:
+        description: 'Select an option'
+        required: true
+        type: choice
+        options:
+          - Name 1
+          - Name 2
+          - Name 3
       
 env:
   DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
@@ -14,6 +24,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: greeting to user
+        run: |
+         echo " Good Morning  ${{ github.event.inputs.choice}} !"
+       
       - name: Checkout repository
         uses: actions/checkout@v3
 
