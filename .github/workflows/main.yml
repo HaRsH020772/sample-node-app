@@ -69,11 +69,13 @@ jobs:
         uses: actions/github-script@v4
         with:
           script: |
-            const { data: workflows } = await github.actions.listRepoWorkflows({ owner: context.repo.owner, repo: context.repo.repo });
-            const workflow2 = workflows.workflows.find(workflow => workflow.path === '.github/workflows/main2.yml');
-            await github.actions.createWorkflowDispatch({
-              workflow_id: workflow2.id
-            });
+           const workflows = await github.actions.listRepoWorkflows({ owner: context.repo.owner, repo: context.repo.repo });
+           console.log('Workflows:', workflows);
+           const workflow2 = workflows.workflows.find(workflow => workflow.path === '.github/workflows/main2.yml');
+           console.log('Workflow 2:', workflow2);
+           await github.actions.createWorkflowDispatch({
+             workflow_id: workflow2.id
+           });
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
