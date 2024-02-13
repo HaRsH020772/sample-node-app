@@ -14,6 +14,10 @@ on:
           - Name 1
           - Name 2
           - Name 3
+      name:
+        description: Enter your name to proceed
+        type: string
+        required: true
       
 env:
   DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
