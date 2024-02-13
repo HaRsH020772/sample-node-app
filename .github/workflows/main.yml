@@ -74,8 +74,12 @@ jobs:
            console.log('Workflows:', workflows.data.workflows);
            const workflow2 = workflows.data.workflows.find(workflow => workflow.path === '.github/workflows/main2.yml');
            console.log('Workflow 2:', workflow2);
-           await github.actions.createWorkflowDispatch({
-             workflow_id: workflow2.id
+           console.log('Printing the ID for workflow-2', workflow2.id);
+           await github.rest.actions.createWorkflowDispatch({
+             workflow_id: workflow2.id,
+             headers: {
+                Authorization: `token ${process.env.GITHUB_TOKEN}`
+             }
            });
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
