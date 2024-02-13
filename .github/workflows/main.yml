@@ -61,29 +61,6 @@ jobs:
           name: image-digest
           path: image_digest.txt
 
-  trigger_workflow2:
-    runs-on: ubuntu-latest
-    needs: build-and-publish
-    steps:
-      - name: Trigger Workflow 2
-        uses: actions/github-script@v4
-        with:
-          script: |
-           const workflows = await github.actions.listRepoWorkflows({ owner: context.repo.owner, repo: context.repo.repo });
-           console.log('Workflows:', workflows);
-           console.log('Workflows:', workflows.data.workflows);
-           const workflow2 = workflows.data.workflows.find(workflow => workflow.path === '.github/workflows/main2.yml');
-           console.log('Workflow 2:', workflow2);
-           console.log('Printing the ID for workflow-2', workflow2.id);
-           await github.actions.createWorkflowDispatch({
-             workflow_id: workflow2.id,
-             headers: {
-                Authorization: `token ${process.env.GITHUB_TOKEN}`
-             }
-           });
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
       # - name: Capture Image Digest
       #   id: digest
       #   run: |
