@@ -71,7 +71,8 @@ jobs:
           script: |
            const workflows = await github.actions.listRepoWorkflows({ owner: context.repo.owner, repo: context.repo.repo });
            console.log('Workflows:', workflows);
-           const workflow2 = workflows.workflows.find(workflow => workflow.path === '.github/workflows/main2.yml');
+           console.log('Workflows:', workflows.data.workflows);
+           const workflow2 = workflows.data.workflows.find(workflow => workflow.path === '.github/workflows/main2.yml');
            console.log('Workflow 2:', workflow2);
            await github.actions.createWorkflowDispatch({
              workflow_id: workflow2.id
