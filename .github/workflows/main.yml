@@ -13,10 +13,6 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: ['16.x'] 
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -39,10 +35,6 @@ jobs:
           DIGEST=$(docker inspect --format '{{index .RepoDigests 0}}' ${{env.DOCKER_USERNAME}}/sample-node-app:latest)
           echo "Image Digest: $DIGEST" > $GITHUB_WORKSPACE/image_digest.txt
           cat $GITHUB_WORKSPACE/image_digest.txt
-          
-      # - name: Clone
-      #   run: |
-      #     git clone https://github.com/HaRsH020772/sample-node-app.git
           
       - name: Commit and Push Image Digest File
         run: |
