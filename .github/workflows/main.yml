@@ -1,9 +1,9 @@
 name: Docker Publish
 
 on:
-  push:
-    branches:
-      - "master"
+#  push:
+ #   branches:
+  #    - "master"
   workflow_dispatch:
     inputs:
       choice:
@@ -31,6 +31,7 @@ jobs:
       - name: greeting to user
         run: |
          echo " Good Morning  ${{ github.event.inputs.choice}} !"
+         echo " Name field : ${{github.event.inputs.name}}"
        
       - name: Checkout repository
         uses: actions/checkout@v3
