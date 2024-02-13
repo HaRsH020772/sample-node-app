@@ -48,6 +48,19 @@ jobs:
       - name: Push Docker image to Docker Hub
         run: docker push ${{env.DOCKER_USERNAME}}/sample-node-app
 
+      - name: Get Docker image digest
+        id: get_digest
+        run: |
+          DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' ${{env.DOCKER_USERNAME}}/sample-node-app)
+          echo $DIGEST > image_digest.txt
+          echo "::set-output name=digest::$DIGEST"
+
+      - name: Upload image digest as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: image-digest
+          path: image_digest.txt
+
       # - name: Capture Image Digest
       #   id: digest
       #   run: |
