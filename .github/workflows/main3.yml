@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ${{ split(inputs.versions, ',') }}  # Add more versions here as needed
+        version: ${{fromJson('['+github.event.inputs.versions+']')}}  # Add more versions here as needed
 
     steps:
       - name: Checkout repository
