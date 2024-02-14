@@ -1,16 +1,19 @@
 name: Test matrix startegy
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: 'Add multiple versions (comma-separated)'
+        required: true
+        default: '1,2,3' 
 
 jobs:
   test_versioning:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [1, 2, 3, 4]  # Add more versions here as needed
+        version: ${{ split(inputs.versions, ',') }}  # Add more versions here as needed
 
     steps:
       - name: Checkout repository
