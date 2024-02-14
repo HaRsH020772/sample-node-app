@@ -1,0 +1,21 @@
+name: Test matrix startegy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test_versioning:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [1, 2, 3, 4]  # Add more versions here as needed
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Print the version text
+        run: |
+          echo "This is a version ${{matrix.version}}"
