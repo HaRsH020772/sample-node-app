@@ -3,7 +3,7 @@ name: Test matrix startegy
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   test_versioning:
