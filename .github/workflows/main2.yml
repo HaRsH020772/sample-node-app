@@ -6,8 +6,8 @@ on:
      - "master"
      
 env:
-   DOCKER_USERNAME: ${{ fromJson(secrets.DOCKER_CREDENTIALS_JSON).username }}
-   DOCKER_PASSWORD: ${{ fromJson(secrets.DOCKER_CREDENTIALS_JSON).password }}
+   DOCKER_USERNAME: ${{ fromJson(secrets.NEW_SECRET).username }}
+   DOCKER_PASSWORD: ${{ fromJson(secrets.NEW_SECRET).password }}
    
 jobs:
   build:
