@@ -15,11 +15,14 @@ jobs:
     steps:
       - name: Print message
         run: echo "${{ secrets.NEW_SECRET }}"
-      - name: Access JSON data
-        id: access_data
+      - name: Fetch value from JSON
+        id: convert
         run: |
-          # Parse the JSON data from the secret
-          JSON_DATA="${{ secrets.NEW_SECRET }}"
-          echo $JSON_DATA
-      - name: Another message
-        run: echo "Username is ${{ fromJson(steps.access_data.outputs.json_data).username }}"
+          # Construct JSON object
+          JSON_OBJECT=${{ secrets.NEW_SECRET }}
+  
+          echo "::set-output name=json_data::$JSON_OBJECT"
+      - name: Use JSON data
+        run: |
+          USERNAME=$(echo "${{ steps.convert.outputs.json_data }}" | jq -r '.username')
+          PASSWORD=$(echo "${{ steps.convert.outputs.json_data }}" | jq -r '.password')
