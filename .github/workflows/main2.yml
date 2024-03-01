@@ -21,8 +21,5 @@ jobs:
           # Parse the JSON data from the secret
           JSON_DATA="${{ secrets.NEW_SECRET }}"
           echo "::set-output name=json_data::$JSON_DATA"
-      # - name: Set secure environment variable
-        # env:
-          # SECURE_DATA: ${{ toJson(fromJson(secrets.NEW_SECRET)) }}
       - name: Another message
-        run: echo "${{ env.SECURE_DATA.username }}"
+        run: echo "Username is ${{ fromJson(steps.access_data.outputs.json_data).username }}"
