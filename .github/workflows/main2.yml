@@ -19,9 +19,13 @@ jobs:
         id: convert
         run: |
           # Construct JSON object
-          JSON_OBJECT=${{ secrets.NEW_SECRET }}
-          
+          echo "::set-output name=json_data::${{ secrets.NEW_SECRET }}"
+
       - name: Use JSON data
         run: |
+          # Extracting values using jq
           USERNAME=$(echo "${{ steps.convert.outputs.json_data }}" | jq -r '.username')
           PASSWORD=$(echo "${{ steps.convert.outputs.json_data }}" | jq -r '.password')
+
+          echo "Username is: $USERNAME"
+          echo "Password is: $PASSWORD"
