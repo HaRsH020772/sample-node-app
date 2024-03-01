@@ -3,10 +3,8 @@ name: Trigger from docker publish
 on:
   workflow_dispatch:
     inputs:
-      run-workflow:
-        description: 'Run the workflow?'
-        required: true
-        default: 'false'
+      environment:
+        type: choice
         options:
           - 'true'
           - 'false'
