@@ -15,6 +15,12 @@ jobs:
     steps:
       - name: Print message
         run: echo "${{ secrets.NEW_SECRET }}"
+      - name: Access JSON data
+        id: access_data
+        run: |
+          # Parse the JSON data from the secret
+          JSON_DATA=$(echo "${{ secrets.JSON_SECRET }}" | base64 --decode)
+          echo "::set-output name=json_data::$JSON_DATA"
       # - name: Set secure environment variable
         # env:
           # SECURE_DATA: ${{ toJson(fromJson(secrets.NEW_SECRET)) }}
