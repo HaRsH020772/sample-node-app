@@ -3,7 +3,7 @@ name: Trigger from docker publish
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      run-workflow:
         type: choice
         options:
           - 'true'
@@ -18,16 +18,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    
       - name: Check input and run if true
         if: ${{ github.event.inputs.run-workflow == 'true' }}
         run: |
           echo "Workflow is running."
           
-      - name: Skipped if input is no
+      - name: Check input and exit if false
         if: ${{ github.event.inputs.run-workflow == 'false' }}
-        run: |
-          echo "Workflow is skipped."
-          exit 0  # Exit the job successfully
+        run: exit 1  # Exit the entire workflow with a non-zero code
           
       - name: Print message
         run: echo "${{ secrets.NEW_SECRET }}"
