@@ -18,7 +18,8 @@ jobs:
       - name: Extract Docker credentials
         run: echo '${{ secrets.NEW_SECRET }}' > ~/docker_credentials.json
   
-      - name: Login to Docker registry
+      - name: Extract credentials
         run: |
             echo "$(cat /docker_credentials.json)" | jq -r '.username' > /docker_username
             echo "$(cat /docker_credentials.json)" | jq -r '.password' > /docker_password
+            echo "$(cat /docker_username)"
