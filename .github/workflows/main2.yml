@@ -22,4 +22,4 @@ jobs:
         run: |
             echo "$(cat /docker_credentials.json)" | jq -r '.username' > /docker_username
             echo "$(cat /docker_credentials.json)" | jq -r '.password' > /docker_password
-            echo "$(cat /docker_username)"
+            echo $(sudo cat /docker_username)
