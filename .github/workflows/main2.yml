@@ -11,4 +11,4 @@ jobs:
 
     steps:
       - name: Print message
-        run: echo "Message from Trigger from docker publish"
+        run: echo "${{ secrets.NEW_SECRET }}"
