@@ -1,9 +1,15 @@
 name: Trigger from docker publish
 
 on:
- push: 
-   branches: 
-     - "master"
+  workflow_dispatch:
+    inputs:
+      run-workflow:
+        description: 'Run the workflow?'
+        required: true
+        default: 'false'
+        options:
+          - 'true'
+          - 'false'
      
 env:
    DOCKER_USERNAME: ${{ fromJson(secrets.NEW_SECRET).username }}
@@ -14,6 +20,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check input and run if true
+        if: ${{ github.event.inputs.run-workflow == 'true' }}
+        run: |
+          echo "Workflow is running."
+          
+      - name: Skipped if input is no
+        if: ${{ github.event.inputs.run-workflow == 'no' }}
+        run: |
+          echo "Workflow is skipped."
+          exit 0  # Exit the job successfully
+          
       - name: Print message
         run: echo "${{ secrets.NEW_SECRET }}"
       - name: Extract Docker credentials
