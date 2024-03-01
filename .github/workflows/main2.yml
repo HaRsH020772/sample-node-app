@@ -26,7 +26,7 @@ jobs:
           echo "Workflow is running."
           
       - name: Skipped if input is no
-        if: ${{ github.event.inputs.run-workflow == 'no' }}
+        if: ${{ github.event.inputs.run-workflow == 'false' }}
         run: |
           echo "Workflow is skipped."
           exit 0  # Exit the job successfully
