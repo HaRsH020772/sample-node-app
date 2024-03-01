@@ -4,6 +4,9 @@ on:
  push: 
    branches: 
      - "master"
+     
+# env:
+#   secure_data: ${{ toJson(fromJson(secrets.MY_SECRET)) }}
 
 jobs:
   build:
@@ -12,5 +15,8 @@ jobs:
     steps:
       - name: Print message
         run: echo "${{ secrets.NEW_SECRET }}"
+      - name: Set secure environment variable
+        env:
+          SECURE_DATA: ${{ toJson(fromJson(secrets.NEW_SECRET)) }}
       - name: Another message
-        run: echo "${{ secrets.NEW_SECRET.username }}"
+        run: echo "${{ env.SECURE_DATA.username }}"
