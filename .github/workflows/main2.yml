@@ -15,17 +15,10 @@ jobs:
     steps:
       - name: Print message
         run: echo "${{ secrets.NEW_SECRET }}"
-      - name: Fetch value from JSON
-        id: convert
+      - name: Extract Docker credentials
+        run: echo '${{ secrets.NEW_SECRET }}' > ~/docker_credentials.json
+  
+      - name: Login to Docker registry
         run: |
-          # Construct JSON object
-          echo "::set-output name=json_data::${{ secrets.NEW_SECRET }}"
-
-      - name: Use JSON data
-        run: |
-          # Extracting values using jq
-          USERNAME=$(echo "${{ steps.convert.outputs.json_data }}" | jq -r '.username')
-          PASSWORD=$(echo "${{ steps.convert.outputs.json_data }}" | jq -r '.password')
-
-          echo "Username is: $USERNAME"
-          echo "Password is: $PASSWORD"
+            echo "$(cat /docker_credentials.json)" | jq -r '.username' > /docker_username
+            echo "$(cat /docker_credentials.json)" | jq -r '.password' > /docker_password
