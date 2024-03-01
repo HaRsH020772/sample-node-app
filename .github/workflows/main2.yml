@@ -13,4 +13,4 @@ jobs:
       - name: Print message
         run: echo "${{ secrets.NEW_SECRET }}"
       - name: Another message
-        run: echo "${{ secrets.NEW_SECRET }}.username"
+        run: echo "${{ secrets.NEW_SECRET.username }}"
