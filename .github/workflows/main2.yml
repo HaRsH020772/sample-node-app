@@ -4,10 +4,6 @@ on:
  push: 
    branches: 
      - "master"
-     
-env:
-    DOCKER_USERNAME: ${{ fromJson(secrets.DOCKER_CREDENTIALS_JSON).username }}
-    DOCKER_PASSWORD: ${{ fromJson(secrets.DOCKER_CREDENTIALS_JSON).password }}
 
 jobs:
   build:
@@ -18,6 +14,9 @@ jobs:
         run: echo "${{ secrets.NEW_SECRET }}"
       - name: Extract Docker credentials
         run: echo '${{ secrets.NEW_SECRET }}' > ~/docker_credentials.json
+        env:
+           DOCKER_USERNAME: ${{ fromJson(secrets.DOCKER_CREDENTIALS_JSON).username }}
+           DOCKER_PASSWORD: ${{ fromJson(secrets.DOCKER_CREDENTIALS_JSON).password }}
   
       - name: Extract credentials
         run: |
