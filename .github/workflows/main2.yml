@@ -20,7 +20,6 @@ jobs:
         run: |
           # Construct JSON object
           JSON_OBJECT=${{ secrets.NEW_SECRET }}
-          echo "::set-output name=json_data::$JSON_OBJECT"
           
       - name: Use JSON data
         run: |
