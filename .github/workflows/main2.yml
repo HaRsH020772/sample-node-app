@@ -19,7 +19,7 @@ jobs:
         id: access_data
         run: |
           # Parse the JSON data from the secret
-          JSON_DATA=$(echo "${{ secrets.NEW_SECRET }}" | base64 --decode)
+          JSON_DATA="${{ secrets.NEW_SECRET }}"
           echo "::set-output name=json_data::$JSON_DATA"
       # - name: Set secure environment variable
         # env:
