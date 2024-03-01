@@ -15,8 +15,8 @@ jobs:
     steps:
       - name: Print message
         run: echo "${{ secrets.NEW_SECRET }}"
-      - name: Set secure environment variable
-        env:
-          SECURE_DATA: ${{ toJson(fromJson(secrets.NEW_SECRET)) }}
+      # - name: Set secure environment variable
+        # env:
+          # SECURE_DATA: ${{ toJson(fromJson(secrets.NEW_SECRET)) }}
       - name: Another message
         run: echo "${{ env.SECURE_DATA.username }}"
