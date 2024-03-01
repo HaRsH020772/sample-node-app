@@ -20,6 +20,6 @@ jobs:
   
       - name: Extract credentials
         run: |
-            echo "$(cat /docker_credentials.json)" | jq -r '.username' > /docker_username
-            echo "$(cat /docker_credentials.json)" | jq -r '.password' > /docker_password
+            echo "$(sudo cat /docker_credentials.json)" | jq -r '.username' > /docker_username
+            echo "$(sudo cat /docker_credentials.json)" | jq -r '.password' > /docker_password
             echo $(sudo cat /docker_username)
