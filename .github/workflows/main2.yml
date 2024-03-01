@@ -5,8 +5,9 @@ on:
    branches: 
      - "master"
      
-# env:
-#   secure_data: ${{ toJson(fromJson(secrets.MY_SECRET)) }}
+env:
+    DOCKER_USERNAME: ${{ fromJson(secrets.DOCKER_CREDENTIALS_JSON).username }}
+    DOCKER_PASSWORD: ${{ fromJson(secrets.DOCKER_CREDENTIALS_JSON).password }}
 
 jobs:
   build:
@@ -23,3 +24,4 @@ jobs:
             echo "$(cat ~/docker_credentials.json)" | jq -r '.username' > ~/docker_username
             echo "$(cat ~/docker_credentials.json)" | jq -r '.password' > ~/docker_password
             echo $(cat ~/docker_username)
+            echo "$DOCKER_USERNAME"
