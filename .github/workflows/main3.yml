@@ -1,24 +1,66 @@
-name: Test matrix startegy
+# name: Test matrix startegy
+
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       versions:
+#         description: 'Add multiple versions (comma-separated)'
+#         required: true
+#         default: '1,2,3' 
+
+# jobs:
+#   test_versioning:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         version: ${{fromJson('['+github.event.inputs.versions+']')}}  # Add more versions here as needed
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+
+#       - name: Print the version text
+#         run: |
+#           echo "This is a version ${{matrix.version}}"
+
+name: Docker Publish
 
 on:
+#  push:
+ #   branches:
+  #    - "master"
+   
   workflow_dispatch:
     inputs:
-      versions:
-        description: 'Add multiple versions (comma-separated)'
+      choice:
+        description: 'Select an option'
         required: true
-        default: '1,2,3' 
+        type: choice
+        options:
+          - Name 1
+          - Name 2
+          - Name 3
+      name:
+        description: Enter your name to proceed
+        type: string
+        required: true
 
 jobs:
-  test_versioning:
+  build-and-publish:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        version: ${{fromJson('['+github.event.inputs.versions+']')}}  # Add more versions here as needed
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Print the version text
+      - name: greeting to user
         run: |
-          echo "This is a version ${{matrix.version}}"
+         echo " Good Morning  ${{ github.event.inputs.choice}} !"
+         echo " Name field : ${{github.event.inputs.name}}"
+  
+      - name: Publish SNS Topic
+        uses: nothingalike/sns-publish-topic@v1.6
+        with:
+          MESSAGE: "message"
+          TOPIC_ARN: "arn:aws:sns:us-east-1:081924706021:pipeline"
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
