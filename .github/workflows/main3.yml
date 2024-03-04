@@ -23,7 +23,7 @@
 #         run: |
 #           echo "This is a version ${{matrix.version}}"
 
-name: Docker Publish
+name: AWS-SNS
 
 on:
 #  push:
