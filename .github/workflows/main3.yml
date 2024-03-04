@@ -23,7 +23,7 @@
 #         run: |
 #           echo "This is a version ${{matrix.version}}"
 
-name: AWS-SNS
+name: GCP-PUB/SUB
 
 on:
 #  push:
@@ -64,5 +64,5 @@ jobs:
   
       - name: Publish message to Pub/Sub
         run: |
-          gcloud pubsub topics publish Docker_registory --message='Dummy message'
+          gcloud pubsub topics publish Docker_registory --message='{"deploy": "false"}'
 
