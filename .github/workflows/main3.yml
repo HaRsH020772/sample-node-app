@@ -46,21 +46,19 @@ on:
         required: true
 
 jobs:
-  build-and-publish:
+  publish-message:
     runs-on: ubuntu-latest
-
     steps:
-      - name: greeting to user
-        run: |
-         echo " Good Morning  ${{ github.event.inputs.choice}} !"
-         echo " Name field : ${{github.event.inputs.name}}"
-  
-      - name: Publish SNS Topic
-        uses: nothingalike/sns-publish-topic@v1.6
+      - uses: actions/checkout@v3  # Checkout your code if necessary
+      - id: auth
+        name: Authenticate to GCP
+        uses: google-github-actions/auth@v0
         with:
-          MESSAGE: "message"
-          TOPIC_ARN: "arn:aws:sns:us-east-1:081924706021:pipeline"
-        env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          credentialsJson: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+      - id: publish
+        name: Publish message
+        uses: miraliumre/actions-pubsub@v1  # Or another compatible action
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          topic_name: Docker_registry  # Replace with your Pub/Sub topic name
+          message: '{"data": "Your message content"}' 
