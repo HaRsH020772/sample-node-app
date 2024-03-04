@@ -76,8 +76,8 @@ jobs:
           service_account_key_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
       - name: Publish to Pub/Sub
-        uses: google-github-actions/publish-to-pubsub@v1
+        uses: miraliumre/actions-pubsub@v1
         with:
-          project_id: pub-sub-416205
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
           topic_name: Docker_registry
           message: "Hello, world!"
