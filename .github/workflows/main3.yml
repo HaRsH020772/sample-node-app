@@ -45,39 +45,24 @@ on:
         type: string
         required: true
 
-# jobs:
-#   publish-message:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v3  # Checkout your code if necessary
-#       - id: auth
-#         name: Authenticate to GCP
-#         uses: google-github-actions/auth@v2
-#         with:
-#           credentialsJson: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-#       - id: publish
-#         name: Publish message
-#         uses: miraliumre/actions-pubsub@v1  # Or another compatible action
-#         with:
-#           project_id: ${{ secrets.GCP_PROJECT_ID }}
-#           topic_name: Docker_registry  # Replace with your Pub/Sub topic name
-#           message: '{"data": "Your message content"}' 
-
 jobs:
-  publish_to_pubsub:
+  publish-message:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Authenticate with Service Account Key JSON
-        uses: google-github-actions/setup-gcloud@v1
+      - uses: actions/checkout@v3  # Checkout your code if necessary
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
         with:
-          service_account_key_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
 
-      - name: Publish to Pub/Sub
-        uses: miraliumre/actions-pubsub@v1
+      - name: Set up Google Cloud
+        uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          topic_name: Docker_registry
-          message: "Hello, world!"
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          project_id: pub-sub-416205
+          export_default_credentials: true
+  
+      - name: Publish message to Pub/Sub
+        run: |
+          gcloud pubsub topics publish Docker_registory --message='Dummy message'
+
