@@ -45,20 +45,38 @@ on:
         type: string
         required: true
 
+# jobs:
+#   publish-message:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3  # Checkout your code if necessary
+#       - id: auth
+#         name: Authenticate to GCP
+#         uses: google-github-actions/auth@v2
+#         with:
+#           credentialsJson: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+#       - id: publish
+#         name: Publish message
+#         uses: miraliumre/actions-pubsub@v1  # Or another compatible action
+#         with:
+#           project_id: ${{ secrets.GCP_PROJECT_ID }}
+#           topic_name: Docker_registry  # Replace with your Pub/Sub topic name
+#           message: '{"data": "Your message content"}' 
+
 jobs:
-  publish-message:
+  publish_to_pubsub:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3  # Checkout your code if necessary
-      - id: auth
-        name: Authenticate to GCP
-        uses: google-github-actions/auth@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
         with:
-          credentialsJson: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-      - id: publish
-        name: Publish message
-        uses: miraliumre/actions-pubsub@v1  # Or another compatible action
-        with:
+          version: 'latest'
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          topic_name: Docker_registry  # Replace with your Pub/Sub topic name
-          message: '{"data": "Your message content"}' 
+
+      - name: Publish Message to Pub/Sub
+        run: |
+          gcloud pubsub topics publish Docker_registry --message "Hello from GitHub Actions!"
