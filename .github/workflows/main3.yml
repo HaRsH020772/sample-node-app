@@ -64,5 +64,5 @@ jobs:
   
       - name: Publish message to Pub/Sub
         run: |
-          gcloud pubsub topics publish Docker_registory --message='{"deploy": "false"}'
+          gcloud pubsub topics publish Docker_registory --message='{"deploy": "true"}'
 
