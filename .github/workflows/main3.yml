@@ -1,35 +1,6 @@
-# name: Test matrix startegy
-
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       versions:
-#         description: 'Add multiple versions (comma-separated)'
-#         required: true
-#         default: '1,2,3' 
-
-# jobs:
-#   test_versioning:
-#     runs-on: ubuntu-latest
-#     strategy:
-#       matrix:
-#         version: ${{fromJson('['+github.event.inputs.versions+']')}}  # Add more versions here as needed
-
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
-
-#       - name: Print the version text
-#         run: |
-#           echo "This is a version ${{matrix.version}}"
-
-name: GCP-PUB/SUB
+name: GCP-PUB/SUB for spinnaker
 
 on:
-#  push:
- #   branches:
-  #    - "master"
-   
   workflow_dispatch:
     inputs:
       choice:
@@ -37,13 +8,9 @@ on:
         required: true
         type: choice
         options:
-          - Name 1
-          - Name 2
-          - Name 3
-      name:
-        description: Enter your name to proceed
-        type: string
-        required: true
+          - Start
+          - Stop
+          - Resume
 
 jobs:
   publish-message:
@@ -61,8 +28,7 @@ jobs:
           service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
           project_id: pub-sub-416205
           export_default_credentials: true
-  
+
       - name: Publish message to Pub/Sub
         run: |
-          gcloud pubsub topics publish Docker_registory --message='{"deploy": "true"}'
-
+          gcloud pubsub topics publish Email-notify --message='{"deploy": "true"}'
