@@ -31,4 +31,4 @@ jobs:
 
       - name: Publish message to Pub/Sub
         run: |
-          gcloud pubsub topics publish Email-notify --message='{"deploy": "true"}'
+          gcloud pubsub topics publish Email-notify --message='{"access": "true"}'
